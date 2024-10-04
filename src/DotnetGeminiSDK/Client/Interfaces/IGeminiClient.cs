@@ -22,7 +22,8 @@ namespace DotnetGeminiSDK.Client.Interfaces
         Task<GeminiMessageResponse?> TextPrompt(
             List<Content> messages,
             GenerationConfig? generationConfig = null,
-            SafetySetting? safetySetting = null
+            SafetySetting? safetySetting = null,
+            Content? systemInstruction = null
         );
 
         Task<GeminiCountTokenMessageResponse?> CountTokens(

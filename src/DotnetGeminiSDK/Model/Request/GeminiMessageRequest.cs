@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 
 namespace DotnetGeminiSDK.Model.Request
@@ -9,6 +10,17 @@ namespace DotnetGeminiSDK.Model.Request
         public string? Role { get; set; }
 
         [JsonProperty("parts")] public List<Part> Parts { get; set; }
+
+        public override string ToString()
+        {
+            // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
+            if (Parts == null)
+            {
+                return $"{Role}: ";
+            }
+            
+            return $"{Role}: {string.Join("", Parts.Select(x => x.Text))}";
+        }
     }
 
     public class Part
@@ -28,6 +40,9 @@ namespace DotnetGeminiSDK.Model.Request
 
         [JsonProperty("safetySetting", NullValueHandling = NullValueHandling.Ignore)]
         public SafetySetting? SafetySetting { get; set; }
+
+        [JsonProperty("systemInstruction", NullValueHandling = NullValueHandling.Ignore)]
+        public Content? SystemInstruction { get; set; }
     }
 
     public class GenerationConfig
@@ -40,7 +55,7 @@ namespace DotnetGeminiSDK.Model.Request
 
         [JsonProperty("topP")] public double TopP { get; set; }
 
-        [JsonProperty("topK")] public int TopK { get; set; }
+        [JsonProperty("topK", NullValueHandling = NullValueHandling.Ignore )] public int? TopK { get; set; }
     }
 
     public class SafetySetting

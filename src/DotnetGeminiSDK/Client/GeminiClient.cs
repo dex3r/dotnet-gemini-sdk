@@ -89,12 +89,13 @@ namespace DotnetGeminiSDK.Client
         public async Task<GeminiMessageResponse?> TextPrompt(
             List<Content> messages,
             GenerationConfig? generationConfig = null,
-            SafetySetting? safetySetting = null)
+            SafetySetting? safetySetting = null,
+            Content? systemInstruction = null)
         {
             if (!messages.Any()) throw new ArgumentException("Messages cannot be empty.");
 
             var promptUrl = $"{_config.TextBaseUrl}:generateContent?key={_config.ApiKey}";
-            var request = BuildGeminiRequest(messages, generationConfig, safetySetting);
+            var request = BuildGeminiRequest(messages, generationConfig, safetySetting, systemInstruction);
 
             return await _apiRequester.PostAsync<GeminiMessageResponse>(promptUrl, request);
         }
@@ -453,17 +454,19 @@ namespace DotnetGeminiSDK.Client
         /// <param name="messages">Messages to be processed</param>
         /// <param name="generationConfig">A optional generation config</param>
         /// <param name="safetySetting">A optional safety setting</param>
+        /// <param name="systemInstruction"></param>
         /// <returns>A request containing GeminiMessageRequest</returns>
-        private static GeminiMessageRequest BuildGeminiRequest(
-            List<Content> messages,
+        private static GeminiMessageRequest BuildGeminiRequest(List<Content> messages,
             GenerationConfig? generationConfig = null,
-            SafetySetting? safetySetting = null)
+            SafetySetting? safetySetting = null,
+            Content? systemInstruction = null)
         {
             return new GeminiMessageRequest
             {
                 Contents = messages,
                 GenerationConfig = generationConfig,
-                SafetySetting = safetySetting
+                SafetySetting = safetySetting,
+                SystemInstruction = systemInstruction
             };
         }
 
