@@ -3,9 +3,9 @@
     <PropertyGroup>
         <ImplicitUsings>false</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
         <LangVersion>8.0</LangVersion>
         <Version>1.0.8</Version>
+        <TargetFramework>netstandard2.1</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
